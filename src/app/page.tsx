@@ -3,6 +3,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { Leaderboard } from "./components/leaderboard";
 import { CreatorVideoList } from "./components/creatorvideolist";
+import './globals.css'
 
 export default function Home() {
   const [data, setData] = useState([]);
