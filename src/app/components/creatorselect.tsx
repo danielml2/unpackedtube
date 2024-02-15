@@ -3,7 +3,8 @@ import { ReactElement } from "react";
 export function CreatorSelect(props: any): ReactElement {
   return (
     <div>
-      <select onChange={(event) => props.onChange(event.target.value)}>
+      <select   className="select w-full max-w-xs" onChange={(event) => props.onChange(event.target.value)}>
+        <option disabled selected>Choose creator</option>
         {render(props.data)}
       </select>
     </div>
@@ -17,7 +18,14 @@ export function CreatorSelect(props: any): ReactElement {
         creatorList.push(video["subtitles"][0]["name"]);
     });
 
-    return creatorList.map((creator) => (
+    return creatorList.sort((creatorA, creatorB) =>  {
+      let nameA = creatorA.toLowerCase(), nameB = creatorB.toLowerCase()
+      if (nameA < nameB) 
+        return -1;
+      if (nameA > nameB)
+          return 1;
+      return 0;
+    }).map((creator) => (
       <option key={creator} value={creator}>
         {creator}
       </option>

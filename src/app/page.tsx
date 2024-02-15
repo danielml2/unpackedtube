@@ -14,6 +14,7 @@ export default function Home() {
     <div>
       <input
         type="file"
+        className="file-input"
         onChange={(event) => {
           if (!event.target.files) return;
 

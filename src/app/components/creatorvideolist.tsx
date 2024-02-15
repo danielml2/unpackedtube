@@ -9,21 +9,19 @@ export function CreatorVideoList(props: any): ReactElement {
 
   return (
     <div>
-      <button onClick={() => {
-        if(props.data.length > 0)
-          setIsHidden(!isHidden)
-      }}>{isHidden ? "Open Creator video search" : "Close creator video search"}</button>
-      <div hidden={isHidden}>
+    <div className="collapse collapse-arrow bg-base-200">
+      <input type="checkbox"></input>
+      <div className="collapse-title title-xl font-medium">{isHidden ? "Open Creator video search" : "Close creator video search"}</div>
+        <div className="collapse-content">
         <CreatorSelect  data={props.data} onChange={setSelectedCreator} />
       <br />
       {selectedCreator != "" && renderVideos(props.data)}
       </div>
     </div>
+</div>
   );
 
   function renderVideos(data: any[]) {
-    if(isHidden)
-      return <div></div>
     let videos = data;
     let uniqueVideos: any[] = [];
 
