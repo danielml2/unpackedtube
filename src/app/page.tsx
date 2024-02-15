@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { Leaderboard } from "./components/leaderboard";
 import { CreatorVideoList } from "./components/creatorvideolist";
 import "./globals.css";
+import { StatsSummary } from "./components/stats";
 
 export default function Home() {
   const [data, setData] = useState([]);
@@ -38,6 +39,7 @@ export default function Home() {
               <option value={"2020"}>2020</option>
             </select>
             <br />
+            <StatsSummary data={data} year={filter}/>
             <Leaderboard data={data} year={filter} />
             <br />
             <CreatorVideoList data={data} />
