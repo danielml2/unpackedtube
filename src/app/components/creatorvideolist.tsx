@@ -4,16 +4,26 @@ import { CreatorSelect } from "./creatorselect";
 
 export function CreatorVideoList(props: any): ReactElement {
   const [selectedCreator, setSelectedCreator] = useState("");
+  const [isHidden, setIsHidden] = useState(true);
+
 
   return (
     <div>
-      <CreatorSelect data={props.data} onChange={setSelectedCreator} />
+      <button onClick={() => {
+        if(props.data.length > 0)
+          setIsHidden(!isHidden)
+      }}>{isHidden ? "Open Creator video search" : "Close creator video search"}</button>
+      <div hidden={isHidden}>
+        <CreatorSelect  data={props.data} onChange={setSelectedCreator} />
       <br />
       {selectedCreator != "" && renderVideos(props.data)}
+      </div>
     </div>
   );
 
   function renderVideos(data: any[]) {
+    if(isHidden)
+      return <div></div>
     let videos = data;
     let uniqueVideos: any[] = [];
 
@@ -30,12 +40,11 @@ export function CreatorVideoList(props: any): ReactElement {
       <div>
         Count: {videos.length} Unique Videos: {uniqueVideos.length}
         <br />
-        {videos.map((video) => (
-          <div>{video["title"]}</div>
+        {videos.map((video, index) => (
+          <div key={index}>{video["title"]}</div>
         ))}
       </div>
     );
   }
 
-  function setNewSelectedCreator(selectedCreator: string) {}
 }
