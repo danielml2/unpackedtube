@@ -3,8 +3,7 @@ import { ReactElement } from "react";
 export function CreatorSelect(props: any): ReactElement {
   return (
     <div>
-      <select   className="select w-full max-w-xs" onChange={(event) => props.onChange(event.target.value)}>
-        <option disabled selected>Choose creator</option>
+      <select  defaultValue={"Choose creator"} className="select w-full max-w-xs" onChange={(event) => props.onChange(event.target.value)}>
         {render(props.data)}
       </select>
     </div>
