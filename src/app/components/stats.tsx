@@ -8,21 +8,15 @@ function render(props: any) {
   let videos: any[] = props.data;
   let uniqueVideos: any[] = [];
   let uniqueChannels: any[] = [];
-  let filter = props.year;
 
-  if(filter != undefined && filter != "ALL")
-    videos = videos.filter((video) => video["time"].includes(filter))
-
-  videos.forEach((video) => {
-    if (!video["subtitles"]) return;
-    let channelName = video["subtitles"][0]["name"];
-    if (!uniqueChannels.includes(channelName)) uniqueChannels.push(channelName);
-  });
-
-  videos.forEach((video) => {
+  for (let video of videos) {
     if (!uniqueVideos.includes(video["title"]))
       uniqueVideos.push(video["title"]);
-  });
+    if (!video["subtitles"]) continue;
+
+    let channelName = video["subtitles"][0]["name"];
+    if (!uniqueChannels.includes(channelName)) uniqueChannels.push(channelName);
+  }
 
   return (
     <div className="flex justify-center">

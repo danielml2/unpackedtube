@@ -2,28 +2,39 @@
 import { ReactElement } from "react";
 
 export function Leaderboard(props: any): ReactElement {
-  return <div>{render(props.data, props.year)}</div>;
+  return <div>{render(props.data)}</div>;
 }
 
-function render(data: any[], year?: string) {
+function render(data: any[]) {
   let creatorMap = new Map();
 
-  let videos = data;
+  // for(let video of data) {
+  //   if (!video["subtitles"]) return;
+  //   console.log("video")
 
-  if (year != undefined && year.toUpperCase() != "ALL")
-    videos = videos.filter((video: any) => {
-      return video["time"].includes(year);
-    });
+  //   let creatorName = video["subtitles"][0]["name"];
+  //   creatorMap.set(
+  //     creatorName,
+  //     creatorMap.has(creatorName) ? creatorMap.get(creatorName) + 1 : 1
+  //   );
+  // }
+  for(let video of data) {
 
-  videos.forEach((video: any) => {
-    if (!video["subtitles"]) return;
+    if (!video["subtitles"]) continue;
+    console.log("video")
 
     let creatorName = video["subtitles"][0]["name"];
     creatorMap.set(
       creatorName,
       creatorMap.has(creatorName) ? creatorMap.get(creatorName) + 1 : 1
     );
-  });
+  }
+
+  // data.forEach((video) => {
+  
+  // })
+
+  console.log(creatorMap.size)
 
   return Array.from(creatorMap.entries())
     .sort((creator1: any, creator2: any) => {

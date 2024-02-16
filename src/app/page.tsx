@@ -9,6 +9,7 @@ import { StatsSummary } from "./components/stats";
 export default function Home() {
   const [data, setData] = useState([]);
   const [filter, setFilterYear] = useState("");
+  const [filteredData, setFilteredData] = useState<any[]>([])
   let fileReader: FileReader;
 
   return (
@@ -29,6 +30,8 @@ export default function Home() {
             <select className="select max-w-xs"
               onChange={(event) => {
                 setFilterYear(event.target.value);
+                let newFilteredData = filterData(event.target.value);
+                setFilteredData(newFilteredData)
               }}
             >
               <option value={"ALL"}>All Time</option>
@@ -39,8 +42,8 @@ export default function Home() {
               <option value={"2020"}>2020</option>
             </select>
             <br />
-            <StatsSummary data={data} year={filter}/>
-            <Leaderboard data={data} year={filter} />
+            <StatsSummary data={filteredData} year={filter}/>
+            <Leaderboard data={filteredData} year={filter} />
             <br />
             <CreatorVideoList data={data} />
           </div>
@@ -49,6 +52,10 @@ export default function Home() {
     </div>
   );
 
+  function filterData(year: any): any[] {
+    return (year == undefined || year == "ALL") ? data : data.filter((video: any) => video["time"].includes(year)) 
+  }
+
   function loadHistory(fileInputEvent: any) {
     if (!fileInputEvent.target.files) return;
 
@@ -56,7 +63,10 @@ export default function Home() {
     fileReader.onloadend = () => {
       if (!fileReader.result) return;
       let fileData = fileReader.result.toString();
-      setData(JSON.parse(fileData));
+      let videosJSON = JSON.parse(fileData);
+
+      setData(videosJSON)
+      setFilteredData(videosJSON)
     };
 
     fileReader.readAsText(fileInputEvent.target.files[0], "utf-8");

@@ -12,11 +12,12 @@ export function CreatorSelect(props: any): ReactElement {
 
   function render(data: any[]) {
     let creatorList: any[] = [];
-    data.forEach((video) => {
-      if (video["subtitles"] == undefined) return;
+
+    for(let video of data) {
+      if (video["subtitles"] == undefined) continue;
       if (!creatorList.includes(video["subtitles"][0]["name"]))
         creatorList.push(video["subtitles"][0]["name"]);
-    });
+    }
 
     return creatorList.sort((creatorA, creatorB) =>  {
       let nameA = creatorA.toLowerCase(), nameB = creatorB.toLowerCase()
